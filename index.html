@@ -48,6 +48,8 @@
       border-radius: 22px;
       text-align: center;
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      position: relative;
+      z-index: 10;
     }
 
     .art {
@@ -126,14 +128,164 @@
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
+    /* SECOND PAGE STYLES */
+    #secondPage {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: radial-gradient(circle at center, #ffe6f2, #ffd1e3);
+      overflow: hidden;
+    }
+
+    #secondPage.active {
+      display: block;
+    }
+
+    .second-header {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, 90vw);
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 30px;
+      text-align: center;
+      box-shadow: 0 25px 80px rgba(255, 61, 122, 0.3);
+      z-index: 10001;
+    }
+
+    .second-header h1 {
+      font-size: clamp(28px, 4.5vw, 52px);
+      background: linear-gradient(135deg, #ff3b7a, #ff1f68);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    /* FLOATING OPTIONS CONTAINER */
+    #floatingOptions {
+      position: fixed;
+      inset: 0;
+      z-index: 10002;
+    }
+
+    /* FLOATING OPTIONS */
+    .floating-option {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, #ff3b7a, #ff1f68);
+      color: white;
+      font-weight: 700;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(255, 61, 122, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .floating-option:hover {
+      transform: scale(1.15) !important;
+      box-shadow: 0 12px 35px rgba(255, 61, 122, 0.6);
+    }
+
+    /* Size variations */
+    .floating-option.size-small {
+      font-size: clamp(11px, 1.5vw, 14px);
+      padding: 10px 18px;
+    }
+
+    .floating-option.size-medium {
+      font-size: clamp(13px, 1.8vw, 17px);
+      padding: 14px 24px;
+    }
+
+    .floating-option.size-large {
+      font-size: clamp(16px, 2.2vw, 22px);
+      padding: 18px 32px;
+    }
+
+    .heart-icon {
+      font-size: 1.3em;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* FINAL CELEBRATION */
+    .final-celebration {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      background: radial-gradient(circle at center, #ffe6f2, #ffd1e3);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .final-celebration.active {
+      display: flex;
+    }
+
+    .final-message {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 30px 90px rgba(255, 61, 122, 0.4);
+      animation: pop 0.6s ease;
+    }
+
+    .final-message h2 {
+      font-size: clamp(28px, 5vw, 56px);
+      background: linear-gradient(135deg, #ff3b7a, #ff1f68);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+      margin: 0 0 30px 0;
+      line-height: 1.3;
+    }
+
+    .final-image {
+      width: min(500px, 85vw);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .choice-info {
+      margin-top: 20px;
+      padding: 15px 25px;
+      background: rgba(255, 61, 122, 0.1);
+      border-radius: 15px;
+      font-size: 14px;
+      color: #ff1f68;
+      font-weight: 600;
+    }
   </style>
 </head>
 
 <body>
   <canvas id="confettiCanvas"></canvas>
 
-  <main class="card">
-    <!-- ANIMAL WITH HEART -->
+  <!-- FIRST PAGE -->
+  <main class="card" id="firstPage">
     <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="fur" x1="0" x2="1">
@@ -171,15 +323,14 @@
             fill="#ff7aa2"/>
     </svg>
 
-    <h1>nirali will you be my valentine?</h1>
+    <h1>Gudiya Will You Be My Valentine?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </section>
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <div class="hint" id="hint">"No" seems a bit shy 😈</div>
 
     <section class="result" id="result">
       <h2>YAY! 🎉</h2>
@@ -191,12 +342,39 @@
     </section>
   </main>
 
+  <!-- SECOND PAGE -->
+  <div id="secondPage">
+    <div class="second-header">
+      <h1>Will You Be My WIFEEEE For Life?</h1>
+    </div>
+    <div id="floatingOptions"></div>
+  </div>
+
+  <!-- FINAL CELEBRATION -->
+  <div class="final-celebration" id="finalCelebration">
+    <div class="final-message">
+      <h2>You Chose Correct<br>My Future Babies Mommy! 💕</h2>
+      <img
+        class="final-image"
+        src="https://i.imgflip.com/2/57p182.jpg"
+        alt="7 crore"
+      />
+      <div class="choice-info" id="choiceInfo">
+        Her choice will be logged here ✨
+      </div>
+    </div>
+  </div>
+
   <script>
     const zone = document.getElementById("zone");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    const firstPage = document.getElementById("firstPage");
+    const secondPage = document.getElementById("secondPage");
+    const finalCelebration = document.getElementById("finalCelebration");
+    const choiceInfo = document.getElementById("choiceInfo");
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -219,28 +397,28 @@
     });
 
     function fullScreenConfetti() {
-      const end = Date.now() + 1600;
+      const end = Date.now() + 2000;
 
       (function frame() {
         confettiInstance({
-          particleCount: 12,
+          particleCount: 15,
           spread: 90,
           startVelocity: 45,
-          ticks: 180,
-          origin: { x: Math.random(), y: Math.random() * 0.3 }
+          ticks: 200,
+          origin: { x: Math.random(), y: Math.random() * 0.4 }
         });
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
 
       setTimeout(() => {
         confettiInstance({
-          particleCount: 300,
-          spread: 140,
-          startVelocity: 60,
-          ticks: 220,
-          origin: { x: 0.5, y: 0.55 }
+          particleCount: 400,
+          spread: 160,
+          startVelocity: 70,
+          ticks: 250,
+          origin: { x: 0.5, y: 0.5 }
         });
-      }, 300);
+      }, 400);
     }
 
     /* ---------- YES BUTTON GROWS ---------- */
@@ -289,17 +467,172 @@
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
-    /* ---------- YES CLICK ---------- */
+    /* ---------- YES CLICK - GO TO SECOND PAGE ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
+
+      setTimeout(() => {
+        firstPage.style.display = "none";
+        secondPage.classList.add("active");
+        createFloatingOptions();
+      }, 3000);
     });
+
+    /* ---------- SECOND PAGE: FLOATING OPTIONS ---------- */
+    const options = [
+      { text: "Of course! 💕", size: "small" },
+      { text: "For sure! 💖", size: "small" },
+      { text: "Who else will fuck me in my shadi ka lehenga and ruin my makeup? 👰", size: "small" },
+      { text: "Is there any other option? 💝", size: "small" },
+      { text: "You're not ready for our honeymoon yet! 🌴", size: "small" },
+      { text: "Only if you promise to not give up on us 🤞", size: "small" },
+      { text: "Toh kya koi aur tumhare gote chilegi? 😏", size: "small" },
+      { text: "You think someone else is gonna tear my lingerie? 🔥", size: "small" },
+      { text: "Only if you give up on blowjobs... 💋", size: "medium" },
+      { text: "Fine I want you in me for life 😈", size: "medium" },
+      { text: "Only because I love you too ❤️", size: "large" }
+    ];
+
+    function createFloatingOptions() {
+      const container = document.getElementById("floatingOptions");
+      const minDistance = 180; // Minimum distance between options
+      const positions = [];
+      
+      options.forEach((option, index) => {
+        const optionEl = document.createElement("div");
+        optionEl.className = `floating-option size-${option.size}`;
+        optionEl.innerHTML = `
+          <span class="heart-icon">❤️</span>
+          <span>${option.text}</span>
+          <span class="heart-icon">❤️</span>
+        `;
+        
+        // Find a position with sufficient distance from others
+        let attempts = 0;
+        let startX, startY, tooClose;
+        
+        do {
+          startX = 50 + Math.random() * (window.innerWidth - 400);
+          startY = 180 + Math.random() * (window.innerHeight - 300);
+          
+          tooClose = positions.some(pos => {
+            const dist = Math.hypot(pos.x - startX, pos.y - startY);
+            return dist < minDistance;
+          });
+          
+          attempts++;
+        } while (tooClose && attempts < 50);
+        
+        positions.push({ x: startX, y: startY });
+        
+        optionEl.style.left = startX + "px";
+        optionEl.style.top = startY + "px";
+        
+        container.appendChild(optionEl);
+        
+        // Animate with varying speeds and patterns
+        animateOption(optionEl, index);
+        
+        optionEl.addEventListener("click", () => {
+          logChoice(option.text);
+          showFinalCelebration(option.text);
+        });
+      });
+    }
+
+    function animateOption(element, index) {
+      // Varying speeds and movement patterns
+      const baseSpeed = 0.4 + Math.random() * 0.5;
+      const angle = (index * 137.5) % 360; // Golden angle distribution
+      
+      let x = parseFloat(element.style.left);
+      let y = parseFloat(element.style.top);
+      let vx = Math.cos(angle * Math.PI / 180) * baseSpeed;
+      let vy = Math.sin(angle * Math.PI / 180) * baseSpeed;
+      
+      // Add some wobble
+      let wobblePhase = Math.random() * Math.PI * 2;
+      
+      function move() {
+        wobblePhase += 0.02;
+        const wobbleX = Math.sin(wobblePhase) * 0.3;
+        const wobbleY = Math.cos(wobblePhase * 1.3) * 0.3;
+        
+        x += vx + wobbleX;
+        y += vy + wobbleY;
+        
+        const rect = element.getBoundingClientRect();
+        
+        // Bounce off edges with some randomness
+        if (x <= 0 || x >= window.innerWidth - rect.width) {
+          vx = -vx * (0.9 + Math.random() * 0.2);
+          x = Math.max(0, Math.min(window.innerWidth - rect.width, x));
+        }
+        if (y <= 150 || y >= window.innerHeight - rect.height) {
+          vy = -vy * (0.9 + Math.random() * 0.2);
+          y = Math.max(150, Math.min(window.innerHeight - rect.height, y));
+        }
+        
+        element.style.left = x + "px";
+        element.style.top = y + "px";
+        
+        requestAnimationFrame(move);
+      }
+      
+      move();
+    }
+
+    /* ---------- LOG CHOICE ---------- */
+    function logChoice(choice) {
+      const timestamp = new Date().toISOString();
+      const data = {
+        choice: choice,
+        timestamp: timestamp,
+        page: "Valentine Proposal - Second Page"
+      };
+      
+      // Log to console (you can check browser console)
+      console.log("✨ SHE CHOSE:", data);
+      
+      // Store in browser's console for you to check
+      console.table(data);
+      
+      // Display in the UI
+      choiceInfo.textContent = `She chose: "${choice}" 💕`;
+      
+      // You can also copy this to clipboard automatically
+      const logText = `Choice: ${choice}\nTime: ${timestamp}`;
+      
+      // Try to copy to clipboard
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(logText).then(() => {
+          console.log("✅ Choice copied to clipboard!");
+        }).catch(err => {
+          console.log("Clipboard access denied, but logged to console");
+        });
+      }
+    }
+
+    function showFinalCelebration(choice) {
+      secondPage.classList.remove("active");
+      finalCelebration.classList.add("active");
+      resizeConfettiCanvas();
+      
+      // Massive confetti celebration
+      fullScreenConfetti();
+      
+      setTimeout(() => {
+        fullScreenConfetti();
+      }, 1500);
+      
+      setTimeout(() => {
+        fullScreenConfetti();
+      }, 3000);
+    }
   </script>
 </body>
 </html>
-
-
-
